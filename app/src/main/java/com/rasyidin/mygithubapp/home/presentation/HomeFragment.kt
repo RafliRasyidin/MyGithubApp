@@ -3,6 +3,7 @@ package com.rasyidin.mygithubapp.home.presentation
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,6 +13,8 @@ import com.rasyidin.mygithubapp.core.utils.onSuccess
 import com.rasyidin.mygithubapp.databinding.FragmentHomeBinding
 import com.rasyidin.mygithubapp.ui.component.EventAdapter
 import com.rasyidin.mygithubapp.ui.component.FragmentBinding
+import com.rasyidin.mygithubapp.ui.helper.isLoading
+import com.rasyidin.mygithubapp.ui.helper.isSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -34,6 +37,11 @@ class HomeFragment : FragmentBinding<FragmentHomeBinding>(FragmentHomeBinding::i
     private fun observeEvents() {
         lifecycleScope.launchWhenCreated {
             viewModel.events.collect { result ->
+
+                binding.shimmerEvent.isVisible = isLoading(result)
+
+                binding.rvEvent.isVisible = isSuccess(result)
+
                 result.onSuccess { events ->
                     eventAdapter.submitList(events)
                 }
