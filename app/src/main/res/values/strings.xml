@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyGithubApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="github">GitHub</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="repositories">Repositories</string>
+
+    <string name="starred">starred</string>
+    <string name="release">released</string>
+    <string name="of">of</string>
+    <string name="forked">forked</string>
+    <string name="from">from</string>
+    <string name="create_repo">created a repository</string>
+    <string name="added">added</string>
+    <string name="as_contributor">as contributor on</string>
+    <string name="pub">public</string>
+    <string name="made">made</string>
+</resources>
