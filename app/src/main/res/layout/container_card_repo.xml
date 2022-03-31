@@ -12,33 +12,23 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_username"
-            style="@style/TextSemiBold16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Rasydin" />
-
-        <TextView
             android:id="@+id/tv_repo_name"
             style="@style/TextSemiBold16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_username"
-            app:layout_constraintTop_toTopOf="@id/tv_username"
-            tools:text="/repo_name" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="repo_name" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="tv_repo_desc,tv_username" />
+            app:constraint_referenced_ids="tv_repo_desc,tv_repo_name" />
 
         <TextView
             android:id="@+id/tv_repo_desc"
@@ -48,8 +38,8 @@
             android:maxLines="1"
             android:textColor="@color/colorGrey"
             app:layout_constraintEnd_toEndOf="@id/tv_repo_name"
-            app:layout_constraintStart_toStartOf="@id/tv_username"
-            app:layout_constraintTop_toBottomOf="@id/tv_username"
+            app:layout_constraintStart_toStartOf="@id/tv_repo_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_name"
             tools:text="Repository description" />
 
         <com.google.android.material.card.MaterialCardView
@@ -62,7 +52,7 @@
             app:cardCornerRadius="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintStart_toStartOf="@id/tv_username"
+            app:layout_constraintStart_toStartOf="@id/tv_repo_name"
             app:layout_constraintTop_toBottomOf="@id/barrier2"
             app:layout_constraintWidth_percent=".03" />
 
@@ -88,7 +78,7 @@
             app:layout_constraintStart_toEndOf="@id/tv_lang"
             app:layout_constraintTop_toTopOf="@id/decor_lang"
             app:layout_constraintWidth_percent=".04"
-            app:srcCompat="@drawable/ic_star"
+            app:srcCompat="@drawable/ic_star_grey"
             tools:ignore="ContentDescription" />
 
         <TextView
