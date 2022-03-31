@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable-night/bot_nav_selector.xml" value="0.1" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable-night/ic_github.xml" value="0.1" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable-night/ic_profile.xml" value="0.1" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable-night/ic_search.xml" value="0.1" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable-v24/ic_profile_placeholder.xml" value="0.132" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/bot_nav_selector.xml" value="0.1" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/ic_github.xml" value="0.1235" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/ic_repository.xml" value="0.1" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/ic_star.xml" value="0.132" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/night.xml" value="0.1" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/drawable/text_shade_rounded.xml" value="0.1" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/activity_main.xml" value="0.11581920903954802" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/card_container_repo.xml" value="0.264" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/container_card_release.xml" value="0.23020833333333332" />
@@ -18,8 +25,10 @@
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/fragment_repository.xml" value="0.11195542046605876" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/fragment_search.xml" value="0.23020833333333332" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/item_event.xml" value="0.264" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/item_event_placeholder.xml" value="0.264" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/item_repository.xml" value="0.264" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/item_user.xml" value="0.264" />
+        <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/layout/shimmer_event.xml" value="0.2" />
         <entry key="..\:/Users/RASYIDIN/AndroidStudioProjects/AndroidProject/MyGithubApp/app/src/main/res/menu/bot_nav_menu.xml" value="0.23020833333333332" />
       </map>
     </option>
