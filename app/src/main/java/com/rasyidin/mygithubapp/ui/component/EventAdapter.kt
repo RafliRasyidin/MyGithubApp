@@ -107,7 +107,8 @@ class EventAdapter : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallba
                 val repo = event.repo
                 with(containerCardRelease) {
                     Glide.with(context)
-                        .load(R.drawable.ic_profile_placeholder)
+                        .load(event.org?.avatarUrl)
+                        .placeholder(R.drawable.ic_profile_placeholder)
                         .error(R.drawable.ic_profile_placeholder)
                         .into(imgOrg)
                     tvRepoName.text = repo?.fullName
@@ -126,8 +127,7 @@ class EventAdapter : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallba
                 with(containerCardRepo) {
                     tvLang.text = repository?.language
                     tvRepoDesc.text = repository?.description
-                    tvRepoName.text = "/${repository?.name}"
-                    tvUsername.text = event?.actor?.username
+                    tvRepoName.text = repository?.fullName
                     tvStarCount.text = repository?.stargazersCount.toString()
                     tvUpdateAt.text = repository?.updatedAt
                 }
