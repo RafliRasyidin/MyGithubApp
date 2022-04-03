@@ -1,38 +1,49 @@
 package com.rasyidin.mygithubapp.profile.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rasyidin.mygithubapp.core.domain.ApiResponse
 import com.rasyidin.mygithubapp.core.domain.ResultState
 import com.rasyidin.mygithubapp.core.utils.idle
 import com.rasyidin.mygithubapp.profile.domain.model.User
 import com.rasyidin.mygithubapp.profile.domain.usecase.ProfileUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.rasyidin.mygithubapp.search.domain.model.Repository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ProfileViewModel @Inject constructor(private val useCase: ProfileUseCase) : ViewModel() {
+class ProfileViewModel @AssistedInject constructor(
+    private val useCase: ProfileUseCase,
+    @Assisted private val username: String
+) : ViewModel() {
 
-    private var _user: MutableStateFlow<ResultState<User>> = idle()
+    private val _user: MutableStateFlow<ResultState<User>> = idle()
     val user: StateFlow<ResultState<User>>
         get() = _user
 
-    private var _userFollowers: MutableStateFlow<ResultState<List<User>>> = idle()
+    private val _userRepos: MutableStateFlow<ResultState<List<Repository>>> = idle()
+    val userRepos: StateFlow<ResultState<List<Repository>>>
+        get() = _userRepos
+
+    private val _userFollowers: MutableStateFlow<ResultState<List<User>>> = idle()
     val userFollowers: StateFlow<ResultState<List<User>>>
         get() = _userFollowers
 
-    private var _userFollowing: MutableStateFlow<ResultState<List<User>>> = idle()
+    private val _userFollowing: MutableStateFlow<ResultState<List<User>>> = idle()
     val userFollowing: StateFlow<ResultState<List<User>>>
         get() = _userFollowing
 
-    private var _eventFollow: MutableSharedFlow<ResultState<ApiResponse>> = idle()
+    private val _eventFollow: MutableSharedFlow<ResultState<ApiResponse>> = idle()
     val eventFollow: SharedFlow<ResultState<ApiResponse>>
         get() = _eventFollow
+
+    init {
+        getDetailAuthUser()
+    }
 
     fun getDetailAuthUser() = viewModelScope.launch(Dispatchers.IO) {
         useCase.getAuthUser().collect { resultState ->
@@ -47,12 +58,20 @@ class ProfileViewModel @Inject constructor(private val useCase: ProfileUseCase) 
             useCase.getAuthUserFollowing()
         }
 
+        val dataUserRepos = async {
+            useCase.getAuthUserRepos()
+        }
+
         dataUserFollowers.await().collect { resultState ->
             _userFollowers.value = resultState
         }
 
         dataUserFollowing.await().collect { resultState ->
             _userFollowing.value = resultState
+        }
+
+        dataUserRepos.await().collect { resultState ->
+            _userRepos.value = resultState
         }
 
     }
@@ -100,12 +119,20 @@ class ProfileViewModel @Inject constructor(private val useCase: ProfileUseCase) 
             useCase.getUserFollowing(username)
         }
 
+        val dataUserRepos = async {
+            useCase.getUserRepos(username)
+        }
+
         dataUserFollowers.await().collect { resultState ->
             _userFollowers.value = resultState
         }
 
         dataUserFollowing.await().collect { resultState ->
             _userFollowing.value = resultState
+        }
+
+        dataUserRepos.await().collect { resultState ->
+            _userRepos.value = resultState
         }
 
     }
@@ -121,4 +148,21 @@ class ProfileViewModel @Inject constructor(private val useCase: ProfileUseCase) 
             _userFollowing.value = resultState
         }
     }*/
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory {
+        fun create(username: String): ProfileViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            username: String
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(username) as T
+            }
+        }
+    }
 }
