@@ -36,7 +36,9 @@ class UseCaseModule {
             getUserFollowers = GetUserFollowers(repository),
             getUserFollowing = GetUserFollowing(repository),
             followUser = FollowUser(repository),
-            unfollowUser = UnfollowUser(repository)
+            unfollowUser = UnfollowUser(repository),
+            getAuthUserRepos = GetAuthUserRepos(repository),
+            getUserRepos = GetUserRepos(repository)
         )
     }
 
