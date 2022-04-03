@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_repo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".04"
+            android:src="@color/colorShade"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_repo_name"
+            style="@style/TextSemiBold16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_repo"
+            app:layout_constraintTop_toTopOf="@+id/img_repo"
+            android:background="@drawable/text_shade_rounded"/>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_repo_desc,tv_repo_name" />
+
+        <TextView
+            android:id="@+id/tv_repo_desc"
+            style="@style/TextMedium15"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/text_shade_rounded"
+            android:maxLines="1"
+            android:textColor="@color/colorGrey"
+            app:layout_constraintEnd_toEndOf="@id/tv_repo_name"
+            app:layout_constraintStart_toStartOf="@id/tv_repo_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_repo_name" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/decor_lang"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/colorShade"
+            app:cardCornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="@id/tv_repo_name"
+            app:layout_constraintTop_toBottomOf="@id/barrier2"
+            app:layout_constraintWidth_percent=".03" />
+
+        <TextView
+            android:id="@+id/tv_lang"
+            style="@style/TextRegular12"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorGrey"
+            app:layout_constraintBottom_toBottomOf="@id/decor_lang"
+            app:layout_constraintStart_toEndOf="@id/decor_lang"
+            app:layout_constraintTop_toTopOf="@id/decor_lang"
+            android:background="@drawable/text_shade_rounded" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_star"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/decor_lang"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toEndOf="@id/tv_lang"
+            app:layout_constraintTop_toTopOf="@id/decor_lang"
+            app:layout_constraintWidth_percent=".04"
+            android:src="@color/colorShade"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_star_count"
+            style="@style/TextRegular12"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/colorGrey"
+            app:layout_constraintBottom_toBottomOf="@id/img_star"
+            app:layout_constraintStart_toEndOf="@id/img_star"
+            app:layout_constraintTop_toTopOf="@id/img_star"
+            android:background="@drawable/text_shade_rounded" />
+
+        <TextView
+            android:id="@+id/tv_update_at"
+            style="@style/TextRegular12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:textColor="@color/colorGrey"
+            app:layout_constraintBottom_toBottomOf="@id/img_star"
+            app:layout_constraintEnd_toEndOf="@id/tv_repo_name"
+            app:layout_constraintStart_toEndOf="@id/tv_star_count"
+            app:layout_constraintTop_toTopOf="@id/img_star"
+            android:background="@drawable/text_shade_rounded" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
