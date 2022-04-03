@@ -9,12 +9,15 @@ import com.rasyidin.mygithubapp.search.domain.model.Repository
 import com.rasyidin.mygithubapp.search.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val useCase: SearchUseCase) : ViewModel() {
 
@@ -25,13 +28,17 @@ class SearchViewModel @Inject constructor(private val useCase: SearchUseCase) : 
     val users: StateFlow<ResultState<List<User?>>> = _users
 
     fun searchRepositories(search: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.searchRepositories(search).collect { resultState ->
-            _repositories.value = resultState
-        }
+        useCase.searchRepositories(search)
+            .distinctUntilChanged()
+            .collect { resultState ->
+                _repositories.value = resultState
+            }
     }
 
     fun searchUsers(search: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.searchUsers(search).collect { resultState ->
+        useCase.searchUsers(search)
+            .distinctUntilChanged()
+            .collect { resultState ->
             _users.value = resultState
         }
     }
