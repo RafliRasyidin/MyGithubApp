@@ -72,4 +72,7 @@ data class UserResponse(
 
 	@field:SerializedName("location")
 	val location: String? = null,
+
+	@field:SerializedName("type")
+	val type: String? = null,
 )

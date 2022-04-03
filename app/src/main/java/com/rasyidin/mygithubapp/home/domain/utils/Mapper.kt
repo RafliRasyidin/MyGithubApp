@@ -88,5 +88,6 @@ fun UserResponse.toUser() = User(
     avatarUrl = this.avatarUrl,
     following = this.following,
     name = this.name,
-    location = this.location
+    location = this.location,
+    type = this.type
 )

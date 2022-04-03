@@ -24,4 +24,5 @@ data class User(
     val following: Int? = null,
     val name: String? = null,
     val location: String? = null,
+    val type: String? = null
 )
