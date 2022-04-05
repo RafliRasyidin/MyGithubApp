@@ -8,7 +8,11 @@ import com.rasyidin.mygithubapp.R
 import com.rasyidin.mygithubapp.profile.presentation.FollowersFollowingFragment
 import com.rasyidin.mygithubapp.profile.presentation.RepositoryFragment
 
-class ProfilePagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class ProfilePagerAdapter(
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle,
+    private val username: String
+) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
@@ -17,8 +21,8 @@ class ProfilePagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 ->RepositoryFragment()
-            else -> FollowersFollowingFragment.newInstance(position)
+            0 ->RepositoryFragment.newInstance(username)
+            else -> FollowersFollowingFragment.newInstance(username, position)
         }
     }
 
