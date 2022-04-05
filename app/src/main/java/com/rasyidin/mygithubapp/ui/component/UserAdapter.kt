@@ -37,6 +37,9 @@ class UserAdapter: ListAdapter<User, UserAdapter.UserViewHolder>(DiffCallback) {
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = getItem(position)
         holder.bind(user)
+        holder.binding.root.setOnClickListener {
+            onItemClick?.invoke(user)
+        }
     }
 
     private object DiffCallback: DiffUtil.ItemCallback<User>() {
