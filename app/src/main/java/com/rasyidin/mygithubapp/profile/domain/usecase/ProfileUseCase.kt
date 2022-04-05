@@ -10,5 +10,6 @@ data class ProfileUseCase(
     val getUserFollowers: GetUserFollowers,
     val getUserFollowing: GetUserFollowing,
     val getAuthUserRepos: GetAuthUserRepos,
-    val getUserRepos: GetUserRepos
+    val getUserRepos: GetUserRepos,
+    val isFollowed: IsFollowed
 )

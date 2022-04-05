@@ -52,4 +52,9 @@ interface ProfileService {
         @Path("username") username: String
     ): List<UserResponse>
 
+    @GET("user/following/{username}")
+    suspend fun isFollowed(
+        @Path("username") username: String
+    )
+
 }

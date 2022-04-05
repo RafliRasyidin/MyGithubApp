@@ -28,9 +28,9 @@ data class Repository(
     val updatedAt: String? = null,
     val owner: User? = null,
     val downloadsUrl: String? = null,
-    val url: String? = null,
     val fork: Boolean? = null,
     val openIssues: Int? = null,
     val watchersCount: Int? = null,
-    val forksCount: Int? = null
+    val forksCount: Int? = null,
+    val htmlUrl: String? = null
 )

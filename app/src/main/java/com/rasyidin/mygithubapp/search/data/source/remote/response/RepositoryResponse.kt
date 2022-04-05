@@ -77,9 +77,6 @@ data class RepositoryResponse(
     @field:SerializedName("downloads_url")
     val downloadsUrl: String? = null,
 
-    @field:SerializedName("url")
-    val url: String? = null,
-
     @field:SerializedName("fork")
     val fork: Boolean? = null,
 
@@ -90,5 +87,8 @@ data class RepositoryResponse(
     val watchersCount: Int? = null,
 
     @field:SerializedName("forks_count")
-    val forksCount: Int? = null
+    val forksCount: Int? = null,
+
+    @field:SerializedName("html_url")
+    val htmlUrl: String? = null,
 )

@@ -31,7 +31,7 @@ fun RepositoryResponse.toRepository() = Repository(
     updatedAt = this.updatedAt,
     owner = this.owner?.toUser(),
     downloadsUrl = this.downloadsUrl,
-    url = this.url,
+    htmlUrl = this.htmlUrl,
     fork = this.fork,
     openIssues = this.openIssues,
     watchersCount = this.watchersCount,
@@ -71,7 +71,7 @@ fun List<RepositoryResponse>.toRepositories(): List<Repository> {
             updatedAt = it.updatedAt,
             owner = it.owner?.toUser(),
             downloadsUrl = it.downloadsUrl,
-            url = it.downloadsUrl,
+            htmlUrl = it.htmlUrl,
             fork = it.fork,
             watchersCount = it.watchersCount,
             forksCount = it.forksCount

@@ -1,6 +1,5 @@
 package com.rasyidin.mygithubapp.profile.data.repository
 
-import com.rasyidin.mygithubapp.core.domain.ApiResponse
 import com.rasyidin.mygithubapp.core.domain.ResultState
 import com.rasyidin.mygithubapp.core.utils.fetch
 import com.rasyidin.mygithubapp.core.utils.mapResult
@@ -65,13 +64,13 @@ class ProfileRepositoryImpl @Inject constructor(private val apiService: ProfileS
         }
     }
 
-    override suspend fun followUser(username: String): Flow<ResultState<ApiResponse>> {
+    override suspend fun followUser(username: String): Flow<ResultState<Unit>> {
         return fetch {
             apiService.followUser(username)
         }
     }
 
-    override suspend fun unfollowUser(username: String): Flow<ResultState<ApiResponse>> {
+    override suspend fun unfollowUser(username: String): Flow<ResultState<Unit>> {
         return fetch {
             apiService.unfollowUser(username)
         }
@@ -110,6 +109,12 @@ class ProfileRepositoryImpl @Inject constructor(private val apiService: ProfileS
                     userResponse.toUser()
                 }
             }
+        }
+    }
+
+    override suspend fun isFollowed(username: String): Flow<ResultState<Unit>> {
+        return fetch {
+            apiService.isFollowed(username)
         }
     }
 }
