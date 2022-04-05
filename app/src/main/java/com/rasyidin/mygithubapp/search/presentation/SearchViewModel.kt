@@ -39,7 +39,7 @@ class SearchViewModel @Inject constructor(private val useCase: SearchUseCase) : 
         useCase.searchUsers(search)
             .distinctUntilChanged()
             .collect { resultState ->
-            _users.value = resultState
-        }
+                _users.value = resultState
+            }
     }
 }
