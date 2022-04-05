@@ -12,6 +12,8 @@ import com.rasyidin.mygithubapp.search.domain.model.Repository
 class RepositoryAdapter :
     ListAdapter<Repository, RepositoryAdapter.RepositoryViewHolder>(DiffCallback) {
 
+    var onItemClick: ((Repository) -> Unit)? = null
+
     class RepositoryViewHolder(val binding: ContainerCardRepoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(repository: Repository) {
@@ -43,6 +45,9 @@ class RepositoryAdapter :
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
         val repository = getItem(position)
         holder.bind(repository)
+        holder.binding.root.setOnClickListener {
+            onItemClick?.invoke(repository)
+        }
     }
 
     private object DiffCallback : DiffUtil.ItemCallback<Repository>() {
