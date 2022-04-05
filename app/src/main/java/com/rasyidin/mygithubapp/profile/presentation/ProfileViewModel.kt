@@ -1,24 +1,27 @@
 package com.rasyidin.mygithubapp.profile.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.rasyidin.mygithubapp.core.domain.ApiResponse
 import com.rasyidin.mygithubapp.core.domain.ResultState
 import com.rasyidin.mygithubapp.core.utils.idle
 import com.rasyidin.mygithubapp.profile.domain.model.User
 import com.rasyidin.mygithubapp.profile.domain.usecase.ProfileUseCase
 import com.rasyidin.mygithubapp.search.domain.model.Repository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel @AssistedInject constructor(
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
     private val useCase: ProfileUseCase,
-    @Assisted private val username: String
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _user: MutableStateFlow<ResultState<User>> = idle()
@@ -37,62 +40,23 @@ class ProfileViewModel @AssistedInject constructor(
     val userFollowing: StateFlow<ResultState<List<User>>>
         get() = _userFollowing
 
-    private val _eventFollow: MutableSharedFlow<ResultState<ApiResponse>> = idle()
-    val eventFollow: SharedFlow<ResultState<ApiResponse>>
+    private val _eventFollow: MutableSharedFlow<ResultState<Unit>> = idle()
+    val eventFollow: SharedFlow<ResultState<Unit>>
         get() = _eventFollow
 
+    private val _isFollowed: MutableStateFlow<ResultState<Unit>> = idle()
+    val isFollowed: StateFlow<ResultState<Unit>>
+        get() = _isFollowed
+
     init {
-        getDetailAuthUser()
-    }
+        val username: String? = savedStateHandle["username"]
 
-    fun getDetailAuthUser() = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getAuthUser().collect { resultState ->
-            _user.value = resultState
-        }
-
-        val dataUserFollowers = async {
-            useCase.getAuthUserFollowers()
-        }
-
-        val dataUserFollowing = async {
-            useCase.getAuthUserFollowing()
-        }
-
-        val dataUserRepos = async {
-            useCase.getAuthUserRepos()
-        }
-
-        dataUserFollowers.await().collect { resultState ->
-            _userFollowers.value = resultState
-        }
-
-        dataUserFollowing.await().collect { resultState ->
-            _userFollowing.value = resultState
-        }
-
-        dataUserRepos.await().collect { resultState ->
-            _userRepos.value = resultState
-        }
-
-    }
-
-    /*fun getAuthUser() = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getAuthUser().collect { resultState ->
-            _user.value = resultState
-        }
-    }*/
-
-    /*fun getAuthUserFollowers() = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getAuthUserFollowers().collect { resultState ->
-            _userFollowers.value = resultState
+        if (username.isNullOrEmpty()) {
+            getDetailAuthUser()
+        } else {
+            getDetailUser(username)
         }
     }
-
-    fun getAuthUserFollowing() = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getAuthUserFollowing().collect { resultState ->
-            _userFollowing.value = resultState
-        }
-    }*/
 
     fun followUser(username: String) = viewModelScope.launch(Dispatchers.IO) {
         useCase.followUser(username).collect { resultState ->
@@ -106,21 +70,19 @@ class ProfileViewModel @AssistedInject constructor(
         }
     }
 
-    fun getDetailUser(username: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getDetailUser(username).collect { resultState ->
-            _user.value = resultState
+    fun getAuthReposUser() = viewModelScope.launch(Dispatchers.IO) {
+        useCase.getAuthUserRepos().collect { resultState ->
+            _userRepos.value = resultState
         }
+    }
 
+    fun getAuthFollUser() = viewModelScope.launch(Dispatchers.IO) {
         val dataUserFollowers = async {
-            useCase.getUserFollowers(username)
+            useCase.getAuthUserFollowers()
         }
 
         val dataUserFollowing = async {
-            useCase.getUserFollowing(username)
-        }
-
-        val dataUserRepos = async {
-            useCase.getUserRepos(username)
+            useCase.getAuthUserFollowing()
         }
 
         dataUserFollowers.await().collect { resultState ->
@@ -131,38 +93,51 @@ class ProfileViewModel @AssistedInject constructor(
             _userFollowing.value = resultState
         }
 
-        dataUserRepos.await().collect { resultState ->
+    }
+
+    fun getDetailAuthUser() = viewModelScope.launch(Dispatchers.IO) {
+        useCase.getAuthUser().collect { resultState ->
+            _user.value = resultState
+        }
+
+    }
+
+    fun getDetailUser(username: String) = viewModelScope.launch(Dispatchers.IO) {
+        useCase.getDetailUser(username).collect { resultState ->
+            _user.value = resultState
+        }
+
+        val isFollowed = async {
+            useCase.isFollowed(username)
+        }
+
+        isFollowed.await().collect { resultState ->
+            _isFollowed.value = resultState
+        }
+
+    }
+
+    fun getReposUser(username: String) = viewModelScope.launch(Dispatchers.IO) {
+        useCase.getUserRepos(username).collect { resultState ->
             _userRepos.value = resultState
         }
-
     }
 
-    /*un getUserFollowers(username: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getUserFollowers(username).collect { resultState ->
+    fun getFollUser(username: String) = viewModelScope.launch(Dispatchers.IO) {
+        val dataUserFollowers = async {
+            useCase.getUserFollowers(username)
+        }
+
+        val dataUserFollowing = async {
+            useCase.getUserFollowing(username)
+        }
+
+        dataUserFollowers.await().collect { resultState ->
             _userFollowers.value = resultState
         }
-    }
 
-    fun getUserFollowing(username: String) = viewModelScope.launch(Dispatchers.IO) {
-        useCase.getUserFollowing(username).collect { resultState ->
+        dataUserFollowing.await().collect { resultState ->
             _userFollowing.value = resultState
-        }
-    }*/
-
-    @dagger.assisted.AssistedFactory
-    interface AssistedFactory {
-        fun create(username: String): ProfileViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: AssistedFactory,
-            username: String
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(username) as T
-            }
         }
     }
 }
