@@ -11,10 +11,16 @@ import com.bumptech.glide.Glide
 import com.rasyidin.mygithubapp.R
 import com.rasyidin.mygithubapp.databinding.ItemEventBinding
 import com.rasyidin.mygithubapp.home.domain.model.Event
+import com.rasyidin.mygithubapp.search.domain.model.Repository
+import com.rasyidin.mygithubapp.ui.helper.toShortNumber
 
 class EventAdapter : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback) {
 
-    var onItemClick: ((Event) -> Unit)? = null
+    var onReleaseClick: ((Repository?) -> Unit)? = null
+
+    var onRepoClick: ((Repository?) -> Unit)? = null
+
+    var onProfileClick: ((String) -> Unit)? = null
 
     class EventViewHolder(val binding: ItemEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -128,7 +134,7 @@ class EventAdapter : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallba
                     tvLang.text = repository?.language
                     tvRepoDesc.text = repository?.description
                     tvRepoName.text = repository?.fullName
-                    tvStarCount.text = repository?.stargazersCount.toString()
+                    tvStarCount.text = repository?.stargazersCount.toString().toShortNumber()
                     tvUpdateAt.text = repository?.updatedAt
                 }
 
@@ -157,9 +163,27 @@ class EventAdapter : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallba
         val event = getItem(position)
         holder.bind(event, holder.itemView.context)
 
-        holder.binding.root.setOnClickListener {
-            onItemClick?.invoke(event)
+        holder.binding.apply {
+            imgUser.setOnClickListener {
+                onProfileClick(event.actor?.username.toString())
+            }
+
+            tvUsername.setOnClickListener {
+                onProfileClick(event.actor?.username.toString())
+            }
+
+            containerCardRelease.root.setOnClickListener {
+                onReleaseClick?.invoke(event?.repo)
+            }
+
+            containerCardRepo.root.setOnClickListener {
+                onRepoClick?.invoke(event?.repo)
+            }
         }
+    }
+
+    private fun onProfileClick(username: String) {
+        onProfileClick?.invoke(username)
     }
 
     private object DiffCallback : DiffUtil.ItemCallback<Event>() {
