@@ -2,10 +2,12 @@ package com.rasyidin.mygithubapp.profile.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rasyidin.mygithubapp.R
 import com.rasyidin.mygithubapp.core.utils.onSuccess
@@ -15,19 +17,13 @@ import com.rasyidin.mygithubapp.ui.component.ProfilePagerAdapter
 import com.rasyidin.mygithubapp.ui.component.ProfilePagerAdapter.Companion.TAB_TITLES
 import com.rasyidin.mygithubapp.ui.helper.isLoading
 import com.rasyidin.mygithubapp.ui.helper.isSuccess
+import com.rasyidin.mygithubapp.ui.helper.toShortNumber
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : FragmentBinding<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-    @Inject
-    lateinit var profileViewModelFactory: ProfileViewModel.AssistedFactory
-
-    private val viewModel: ProfileViewModel by activityViewModels {
-        ProfileViewModel.provideFactory(profileViewModelFactory, "RafliRasyidin")
-    }
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     private lateinit var mediator: TabLayoutMediator
 
@@ -40,6 +36,16 @@ class ProfileFragment : FragmentBinding<FragmentProfileBinding>(FragmentProfileB
 
         observeProfile()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBotNavigation()
+    }
+
+    private fun showBotNavigation() {
+        val botNav = (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bot_nav_view)
+        botNav.visibility = View.VISIBLE
     }
 
     private fun observeProfile() {
@@ -93,9 +99,9 @@ class ProfileFragment : FragmentBinding<FragmentProfileBinding>(FragmentProfileB
                         tvBio.text = user?.bio
                         tvCompany.text = user?.company
                         tvEmail.text = user?.email
-                        tvFollowersCount.text = user?.followers.toString()
-                        tvFollowingCount.text = user?.following.toString()
-                        tvRepoCount.text = user?.publicRepos.toString()
+                        tvFollowersCount.text = user?.followers.toString().toShortNumber()
+                        tvFollowingCount.text = user?.following.toString().toShortNumber()
+                        tvRepoCount.text = user?.publicRepos.toString().toShortNumber()
                         tvLocation.text = user?.location
                         tvName.text = user?.name
                     }
@@ -107,7 +113,7 @@ class ProfileFragment : FragmentBinding<FragmentProfileBinding>(FragmentProfileB
 
     private fun setupViewPager() {
         val pagerAdapter by lazy {
-            ProfilePagerAdapter(childFragmentManager, lifecycle)
+            ProfilePagerAdapter(childFragmentManager, lifecycle, "")
         }
         binding.vp.adapter = pagerAdapter
     }
