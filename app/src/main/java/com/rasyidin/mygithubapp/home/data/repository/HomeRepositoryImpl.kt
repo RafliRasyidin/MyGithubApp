@@ -8,6 +8,7 @@ import com.rasyidin.mygithubapp.home.domain.model.Event
 import com.rasyidin.mygithubapp.home.domain.repository.HomeRepository
 import com.rasyidin.mygithubapp.home.domain.utils.toEvent
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -23,7 +24,18 @@ class HomeRepositoryImpl @Inject constructor(private val apiService: HomeService
                     val repoResponse = eventResponseItem.repoResponse
                     val repoName = repoResponse?.name?.substringAfter("/").toString()
                     val name = repoResponse?.name?.substringBefore("/").toString()
-                    eventResponseItem.repoResponse = apiService.getRepository(name, repoName)
+                    val data = fetch {
+                        apiService.getRepository(name, repoName)
+                    }.map {
+                        mapResult(it) {
+                            this
+                        }
+                    }
+                    data.collectLatest {
+                        mapResult(it) {
+                            eventResponseItem.repoResponse = this
+                        }
+                    }
                     eventResponseItem.toEvent()
                 }
             }
