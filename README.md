@@ -15,8 +15,8 @@ Project Submission for Juara Android 2022
 1. Clone this project to your android studio
 2. Open local.properties file
 3. Add these lines of code on local.properties file
-  GITHUB_TOKEN=YOUR_GITHUB_TOKEN
-  BASE_URL=https://api.github.com/
+- GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+- BASE_URL=https://api.github.com/
 4. Build the project
 
 ## Note
